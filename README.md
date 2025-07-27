@@ -1,5 +1,5 @@
-# Parcial02_AppHibridas
-Segundo parcial de Aplicaciones Híbridas - API rest con Node.js y MongoDB + React
+# Final_AppHibridas
+Examen final de Aplicaciones Híbridas - API rest con Node.js y MongoDB + React
 
 ## API de Servicios Internos para Hoteles
 
