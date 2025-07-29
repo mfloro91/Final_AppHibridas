@@ -15,7 +15,7 @@ function Home() {
 
     const handleProfileClick = () => {
         const userId = localStorage.getItem("userId");
-
+        console.log("userId", userId);
         if (token && userId) {
             navigate(`/profile/${userId}`);
         } else {

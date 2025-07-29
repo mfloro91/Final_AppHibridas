@@ -81,6 +81,7 @@ export async function loginUser(req, res) {
 
         res.status(200).json({
             token,
+            id: user.id,
             role: user.role,
             hotel_id: user.hotel_id._id,
             hotelName: user.hotel_id.name,

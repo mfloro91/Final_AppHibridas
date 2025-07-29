@@ -21,12 +21,15 @@ const FormLogin = () => {
             const response = await axios.post("http://localhost:3000/users/login", loginUser);
 
             if (response.status === 200) {
-                console.log("Inicio de sesión exitoso. Rol: ", response.data.name);
+                console.log("Response login:", response.data);
+                console.log("userId:", response.data.id);
                 localStorage.setItem("token", response.data.token);
+                localStorage.setItem("userId", response.data.id);
                 localStorage.setItem("role", response.data.role);
                 localStorage.setItem("hotelId", response.data.hotel_id);
                 localStorage.setItem("name", response.data.name);
                 localStorage.setItem("hotelName", response.data.hotelName);
+
 
 
                 const role = localStorage.getItem("role");
