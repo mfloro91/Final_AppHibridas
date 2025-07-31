@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { Button } from '../routes/UiComponents'
 import axios from 'axios'
+import { toast } from 'react-toastify'
 
 function ServiceById() {
 
@@ -13,6 +14,7 @@ function ServiceById() {
     const navigate = useNavigate();
     const token = localStorage.getItem("token");
     const role = localStorage.getItem("role");
+    const [showConfirm, setShowConfirm] = useState(false);
 
     const goToServices = () => {
         navigate('/services')
@@ -50,20 +52,21 @@ function ServiceById() {
 
     //Endpoint: delete service by id
     const handleDelete = async () => {
-        if (window.confirm("¿Estás seguro de que quieres eliminar este servicio?")) {
-            try {
-                const token = localStorage.getItem("token");
-                await axios.delete(`http://localhost:3000/services/${id}`, {
-                    headers: { Authorization: `Bearer ${token}` }
-                });
-                alert("Servicio eliminado correctamente.");
-                navigate('/services');
-            } catch (err) {
-                console.error(err);
-                alert("Error al eliminar el servicio.");
-            }
+        try {
+            const token = localStorage.getItem("token");
+            await axios.delete(`http://localhost:3000/services/${id}`, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            toast.success("Servicio eliminado correctamente.");
+            navigate('/services');
+        } catch (err) {
+            console.error(err);
+            toast.error("Error al eliminar el servicio.");
+        } finally {
+            setShowConfirm(false);
         }
     }
+
 
     //Enpoint: reservar servicio
     const reservarServicio = async () => {
@@ -76,9 +79,9 @@ function ServiceById() {
                     Authorization: `Bearer ${token}`
                 }
             });
-            alert("¡Servicio reservado con éxito!");
+            toast.success("¡Servicio reservado con éxito!");
         } catch (err) {
-            alert("No se pudo reservar el servicio");
+            toast.error("No se pudo reservar el servicio");
         }
     };
 
@@ -95,8 +98,12 @@ function ServiceById() {
 
             {["superadmin", "admin", "staff"].includes(role) && (
                 <>
-                    <Button text="Editar Servicio" variant="warning" onClick={() => navigate(`/services/editservice/${id}`)}> </Button>
-                    <Button text="Eliminar servicio" variant="danger" onClick={handleDelete}> </Button>
+                    <Button text="Editar servicio" variant="warning" onClick={() => navigate(`/services/editservice/${id}`)}> </Button>
+                    <Button
+                        text="Eliminar servicio"
+                        variant="danger"
+                        onClick={() => setShowConfirm(true)}
+                    />
                 </>
             )}
 
@@ -104,6 +111,26 @@ function ServiceById() {
                 <>
                     <Button text="Reservar" variant="primary" onClick={reservarServicio} />
                 </>
+            )}
+
+            {showConfirm && (
+                <div className="modal-overlay mt-5">
+                    <div className="modal-box">
+                        <h4>¿Estás seguro de que querés eliminar este servicio?</h4>
+                        <div className="modal-actions">
+                            <Button
+                                text="Confirmar"
+                                variant="primary"
+                                onClick={handleDelete}
+                            />
+                            <Button
+                                text="Cancelar"
+                                variant="secondary"
+                                onClick={() => setShowConfirm(false)}
+                            />
+                        </div>
+                    </div>
+                </div>
             )}
 
         </div >

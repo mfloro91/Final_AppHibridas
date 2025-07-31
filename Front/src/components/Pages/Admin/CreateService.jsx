@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import FormService from '../../UI/FormService'
 import { Button } from '../../routes/UiComponents'
 import axios from 'axios'
+import { toast } from 'react-toastify'
 
 
 // CreateService trae el formService y una petición POST para crear un nuevo servicio
@@ -37,13 +38,13 @@ function CreateService() {
       });
 
       console.log("Respuesta del servidor:", res);
-      alert("Servicio creado correctamente.");
+      toast.success("Servicio creado correctamente.");
       navigate("/services");
 
 
     } catch (error) {
       console.error("Error al crear el servicio:", error.response?.data || error.message);
-      alert("Hubo un error al crear el servicio. Revisa la consola.");
+      toast.error("Hubo un error al crear el servicio. Revisa la consola.");
     }
   }
 

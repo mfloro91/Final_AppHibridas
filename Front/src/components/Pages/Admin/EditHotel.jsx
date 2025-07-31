@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import FormHotel from "../../UI/FormHotel";
+import { toast } from 'react-toastify';
+
 
 function EditHotel() {
     const { id } = useParams();
@@ -39,11 +41,11 @@ function EditHotel() {
                 headers: { Authorization: `Bearer ${token}` }
             });
 
-            alert("Hotel actualizado correctamente.");
+            toast.success("Hotel actualizado correctamente");
             navigate('/hotels/' + id); 
             
         } catch (err) {
-            alert("Hubo un error al actualizar el hotel.");
+            toast.error("Error al actualizar el hotel");
             console.error(err);
         }
     };

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Card } from '../../routes/UiComponents'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import { toast } from 'react-toastify'
 
 function Users() {
     const [users, setUsers] = useState([])
@@ -42,12 +43,12 @@ function Users() {
                 headers: { Authorization: `Bearer ${token}` }
             });
 
-            alert("Rol actualizado correctamente");
+            toast.success("Rol actualizado correctamente");
             fetchUsers(token);
 
         } catch (error) {
             console.error("Error al actualizar el rol:", error.response?.data || error.message);
-            alert("Hubo un error al actualizar el rol.");
+            toast.error("Hubo un error al actualizar el rol.");
         }
     };
 

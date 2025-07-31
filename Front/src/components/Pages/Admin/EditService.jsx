@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import FormService from "../../UI/FormService";
+import { toast } from 'react-toastify';
 
 function EditService() {
 
@@ -48,11 +49,11 @@ function EditService() {
         headers: { Authorization: `Bearer ${token}` }
       });
 
-      alert("Servicio actualizado correctamente.");
+      toast.success("Servicio actualizado correctamente.");
       navigate('/services/' + id);
 
     } catch (err) {
-      alert("Hubo un error al actualizar el servicio.");
+      toast.error("Hubo un error al actualizar el servicio.");
       console.error(err);
     }
   };

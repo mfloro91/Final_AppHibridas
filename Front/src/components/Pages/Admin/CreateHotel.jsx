@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import FormHotel from '../../UI/FormHotel'
 import { Button } from '../../routes/UiComponents'
 import axios from 'axios'
+import { toast } from 'react-toastify'
 
 // CreateHotel trae el formHotel y una petición POST para crear un nuevo hotel
 
@@ -32,13 +33,13 @@ function CreateHotel() {
       });
 
       console.log("Respuesta del servidor:", res);
-      alert("Hotel creado correctamente.");
+      toast.success("Hotel creado correctamente.");
       navigate("/hotels");
 
 
     } catch (error) {
       console.error("Error al crear el hotel:", error.response?.data || error.message);
-      alert("Hubo un error al crear el hotel. Revisa la consola.");
+      toast.error("Hubo un error al crear el hotel. Revisa la consola.");
     }
   }
 

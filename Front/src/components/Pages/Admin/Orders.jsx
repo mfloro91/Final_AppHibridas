@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Card } from '../../routes/UiComponents'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import { toast } from 'react-toastify'
 
 function Orders() {
     const [orders, setOrders] = useState([])
@@ -48,7 +49,8 @@ function Orders() {
                         title={order.service_id?.title || "Servicio desconocido"}
                         description={order.status}
                         cta="Ver más"
-                        onClick={() => navigate(`/order/${order._id}`)}
+                        //onClick={() => navigate(`/order/${order._id}`)}
+                        onClick={() => toast.info("Funcionalidad en desarrollo")}
                     />
                 ))}
             </div>

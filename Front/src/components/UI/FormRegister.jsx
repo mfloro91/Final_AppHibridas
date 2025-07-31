@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import FormInput from "./FormInput";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { toast } from 'react-toastify';
 
 const FormRegister = () => {
 
@@ -48,12 +49,12 @@ const FormRegister = () => {
                 password: "",
             });
 
-            alert("Usuario creado correctamente.");
+            toast.success("Usuario creado correctamente.");
             navigate("/login");
 
 
         } catch (error) {
-            alert("No se ha creado el usuario.");
+            toast.error("No se ha creado el usuario.");
             console.error(error);
         }
     }

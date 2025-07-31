@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { Button } from '../../routes/UiComponents'
 import axios from 'axios'
+import { toast } from 'react-toastify'
 
 
 function HotelById() {
@@ -12,6 +13,7 @@ function HotelById() {
     const [error, setError] = useState(null);
 
     const navigate = useNavigate();
+    const [showConfirm, setShowConfirm] = useState(false);
 
     const goToHotels = () => {
         navigate('/hotels')
@@ -53,46 +55,72 @@ function HotelById() {
 
     //Endpoint: delete hotel by id
     const handleDelete = async () => {
-        if (window.confirm("¿Estás seguro de que quieres eliminar este hotel?")) {
-            try {
-                const token = localStorage.getItem("token");
-                await axios.delete(`http://localhost:3000/hotels/${id}`, {
-                    headers: { Authorization: `Bearer ${token}` }
-                });
-                alert("Hotel eliminado correctamente.");
-                navigate('/hotels');
-            } catch (err) {
-                console.error(err);
-                alert("Error al eliminar el hotel.");
-            }
+        try {
+            const token = localStorage.getItem("token");
+            await axios.delete(`http://localhost:3000/hotels/${id}`, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            toast.success("Hotel eliminado correctamente.");
+            navigate('/hotels');
+        } catch (err) {
+            console.error(err);
+            toast.error("Error al eliminar el hotel.");
+        } finally {
+            setShowConfirm(false);
         }
+
     }
 
-    return (
-        <div>
-            <h2> {hotel.name} </h2>
-            <p> {hotel.description} </p>
-            <p> Ciudad: {hotel.city} </p>
-            <p> País: {hotel.country} </p>
-            <ul>
-                {hotel.languages.map((language, index) => (
-                    <li key={index}>{language}</li>
-                ))}
-            </ul>
+
+return (
+    <div>
+        <h2> {hotel.name} </h2>
+        <p> {hotel.description} </p>
+        <p> Ciudad: {hotel.city} </p>
+        <p> País: {hotel.country} </p>
+        <ul>
+            {hotel.languages.map((language, index) => (
+                <li key={index}>{language}</li>
+            ))}
+        </ul>
 
 
-            <Button text="Volver a hoteles" variant="success" onClick={goToHotels}>  </Button>
-            <Button text="Editar hotel" variant="warning" onClick={() => navigate(`/hotels/edithotel/${id}`)}>  </Button>
+        <Button text="Volver a hoteles" variant="success" onClick={goToHotels}>  </Button>
+        <Button text="Editar hotel" variant="warning" onClick={() => navigate(`/hotels/edithotel/${id}`)}>  </Button>
 
 
-            {localStorage.getItem("role") === "superadmin" && (
-                <Button text="Eliminar hotel" variant="danger" onClick={handleDelete}>  </Button>
-            )}
+        {localStorage.getItem("role") === "superadmin" && (
+            <Button
+                text="Eliminar hotel"
+                variant="danger"
+                onClick={() => setShowConfirm(true)}
+            />
+        )}
+
+        {showConfirm && (
+            <div className="modal-overlay mt-5">
+                <div className="modal-box">
+                    <h4>¿Estás seguro de que querés eliminar este hotel?</h4>
+                    <div className="modal-actions">
+                        <Button
+                            text="Confirmar"
+                            variant="primary"
+                            onClick={handleDelete}
+                        />
+                        <Button
+                            text="Cancelar"
+                            variant="secondary"
+                            onClick={() => setShowConfirm(false)}
+                        />
+                    </div>
+                </div>
+            </div>
+        )}
 
 
 
-        </div>
-    )
+    </div>
+)
 }
 
 export default HotelById
