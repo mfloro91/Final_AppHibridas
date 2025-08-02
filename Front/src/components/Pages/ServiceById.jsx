@@ -92,6 +92,14 @@ function ServiceById() {
             <p> {service.description} </p>
             <p> Horarios: {service.availableHours} </p>
 
+            {service.hotel_id && (
+                <div>
+                    <p><strong>Hotel:</strong> {service.hotel_id.name}</p>
+                    <p>{service.hotel_id.city}, {service.hotel_id.country}</p>
+                </div>
+            )}
+
+
 
 
             <Button text="Volver a servicios" variant="success" onClick={goToServices}>  </Button>
@@ -109,7 +117,7 @@ function ServiceById() {
 
             {["user"].includes(role) && (
                 <>
-                    <Button text="Reservar" variant="primary" onClick={reservarServicio} />
+                    <Button text="Reservar" variant="primary" onClick={() => navigate(`/services/reserve/${service._id}`)}  />
                 </>
             )}
 

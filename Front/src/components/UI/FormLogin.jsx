@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import FormInput from "./FormInput";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const FormLogin = () => {
     const [formData, setFormData] = useState({
@@ -13,10 +14,12 @@ const FormLogin = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
         const loginUser = {
             email: formData.email,
             password: formData.password,
         }
+
         try {
             const response = await axios.post("http://localhost:3000/users/login", loginUser);
 
@@ -44,6 +47,9 @@ const FormLogin = () => {
 
         } catch (error) {
             console.error(error);
+            const message = error.response?.data?.message || "Error al iniciar sesión";
+            toast.error(message);
+
         }
     }
 

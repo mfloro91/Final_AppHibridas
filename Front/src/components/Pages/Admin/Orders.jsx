@@ -46,10 +46,28 @@ function Orders() {
                 {orders.map((order) => (
                     <Card
                         key={order._id}
-                        title={order.service_id?.title || "Servicio desconocido"}
-                        description={order.status}
+                        title={`${order.service_id?.title || "Servicio desconocido"} - ${order.hotel_id?.name || "Hotel desconocido"}`}
+                        description={
+                            <>
+                                <p><strong>Estado:</strong> {order.status}</p>
+                                <p><strong>Cliente: </strong>
+                                    {order.user_id?.name
+                                        ? `${order.user_id.name} (${order.user_id.email})`
+                                        : " S/D"}
+                                </p>
+
+                                <p><strong>Nota:</strong> {order.note || "Sin nota"}</p>
+                                <p><strong>Horario:</strong> {order.service_id?.availableHours}</p>
+                                <p><strong>Ubicación:</strong> {order.hotel_id?.city}, {order.hotel_id?.country}</p>
+                                <p><strong>Reservado: </strong>
+                                    {order.createdAt
+                                        ? new Date(order.createdAt).toLocaleDateString()
+                                        : " S/D "}
+                                </p>
+
+                            </>
+                        }
                         cta="Ver más"
-                        //onClick={() => navigate(`/order/${order._id}`)}
                         onClick={() => toast.info("Funcionalidad en desarrollo")}
                     />
                 ))}

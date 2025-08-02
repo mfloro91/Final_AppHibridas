@@ -8,8 +8,6 @@ export {default as Users} from './components/Pages/Admin/Users.jsx';
 
 export {default as NotFound} from './components/Pages/NotFound.jsx';
 
-export {default as Orders} from './components/Pages/Admin/Orders.jsx';
-
 // PANEL ADMIN - solo se habilita en el nav si tenes rol Admin, Superadmin o Staff
 
 export {default as PanelAdmin} from './components/Pages/Admin/PanelAdmin.jsx';
@@ -27,3 +25,7 @@ export {default as Services} from './components/Pages/Services.jsx';
 export {default as CreateService} from './components/Pages/Admin/CreateService.jsx';
 export {default as ServiceById} from './components/Pages/ServiceById.jsx';
 export {default as EditService} from './components/Pages/Admin/EditService.jsx';
+
+//CRUD orders
+export {default as Orders} from './components/Pages/Admin/Orders.jsx';
+export {default as ServiceReserve} from './components/Pages/ServiceReserve.jsx';

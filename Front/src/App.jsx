@@ -28,6 +28,7 @@ function App() {
 
           <Route path="/paneladmin" element={<PanelAdmin />} />
           <Route path="/services/*" element={<ServiceRoutes />} />
+
           <Route path="/hotels/*" element={<HotelRoutes />} />
 
           <Route path="/login" element={<Login />} />
